@@ -63,9 +63,17 @@
 	使用人数比较多时，可以使用gunicorn等多进程部署。
 
 
-#  开发环境
+#  开发
 
-如果要个人修改定制，推荐使用 pycharm + python2.7 环境 
+### 开发环境
+
+如果要个人修改定制，推荐使用 pycharm + python2.7 + flask 
+
+### 代码说明
+
+Drafts python文件
+static 图片等资源
+templates html
 
 
 
