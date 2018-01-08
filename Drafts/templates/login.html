@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script type="text/javascript">
+
+        function login() {
+            user = $('#name').val();
+            $.cookie('user', user, {expires: 7});
+            //$(document).cookie = "user=" + user + "; path=/;";
+            window.location.href = "/?index=0";
+            alert("注册成功，现在可以使用了")
+        }
+
+        $(document).ready(function () {
+
+            $(document).keyup(function (evnet) {
+                if (evnet.keyCode == '13') {
+                    login();
+                }
+            });
+
+        });
+
+    </script>
+
+
+</head>
+<body style="text-align: center;">
+
+<div style="width: 300px; height: 300px; margin: auto;">
+    <p style="text-align: center">输入你要切换的账号，<br>如果账号不存在,自动注册</p>
+
+    <input type="text" id="name" style="width:200px; margin: auto;"><br>
+    <button id="" onclick=login()>确定</button>
+</div>
+
+
+</body>
+</html>

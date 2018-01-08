@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script type="text/javascript">
+
+        var index = 0;
+        function lastpage() {
+
+            {#index = parseInt( $.cookie('index'));#}
+
+            index -= 10;
+
+            if(index  < 0)
+                index = 0;
+
+
+            window.location.href = "/?index=" + index ;
+
+        }
+        function nextpage() {
+
+            {#index = parseInt(  $.cookie('index'));#}
+            index += 10;
+
+
+            window.location.href = "/?index=" + index ;
+
+        }
+
+        function reflushbook(uuid) {
+
+
+            $.ajax({
+                type: "POST",
+                url: "/delte/item",
+                data: {
+                    "uuid": uuid
+                },
+                dataType: 'json',
+                error: function (XMLResponse) {
+
+
+                    {#alert("删除失败");#}
+                },
+                success: function (data, textStatus) {
+                    if (data.code == 200) {
+
+
+                        window.location.href = "/?index=0";
+
+                        {#alert("删除成功");#}
+                    }
+                    else {
+                        {#alert("删除失败");#}
+                    }
+                }
+            });
+        }
+
+
+        function deleteBooks(uuid) {
+
+
+            $.ajax({
+                type: "POST",
+                url: "/delte/books",
+                data: {
+                    "uuid": uuid,
+                },
+                dataType: 'json',
+                error: function (XMLResponse) {
+                    {#alert("删除失败");#}
+                },
+                success: function (data, textStatus) {
+                    if (data.code == 200) {
+                        window.location.href = "/";
+                        {#alert("删除成功");#}
+                    }
+                    else {
+                        {#alert("删除失败");#}
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+
+            $(document).keyup(function (evnet) {
+                if (evnet.keyCode == '13') {
+
+                }
+            });
+
+            $("#save_item").click(function () {
+
+
+                item_text = $("#usertext").val();
+                title = $("#title").val();
+
+                if (item_text.length == 0) {
+                    return;
+                }
+
+                if (title.length == 0) {
+                    return;
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/edit/update",
+                    data: {
+                        "text": item_text,
+                        "title": title,
+
+                    },
+                    dataType: 'json',
+                    error: function (XMLResponse) {
+                        alert("保存失败");
+                    },
+                    success: function (data, textStatus) {
+                        if (data.code == 200) {
+                            alert("保存成功");
+
+                            $("#usertext").val("");
+                            $("#title").val("");
+                            window.location.href = "/";
+                        }
+                        else {
+                            alert("先登陆");
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+</head>
+
+
+<style type="text/css">
+
+    body {
+        font-family: Helvetica, arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+        padding: 30px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 20px 0 10px;
+        padding: 0;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        cursor: text;
+        position: relative;
+    }
+
+    h4 {
+        font-size: 16px;
+        border-bottom: 1px solid #cccccc;
+        color: black;
+    }
+
+    p, blockquote, ul, ol, dl, li, table, pre {
+        font-size: 14px;
+
+        margin: 12px 0;
+    }
+
+    .background_font{
+        font-size: 10px; color: lightgray ;
+    }
+
+</style>
+
+<body>
+
+<div style="float: left;width: 50%">
+
+    {% for cc in data %}
+        <div >
+            <h4><a href="/detail?uuid={{ cc.uuid }}" title="111" target="_blank">{{ cc.title }}</a></h4>
+
+
+        </div>
+
+        <p>{{ cc.text | safe }}</p>
+
+        <div style="float: right; "> <span class="background_font">{{ cc.time }}</span> <a class="background_font" href="#" onclick=deleteBooks("{{ cc.uuid }}")>删除</a></div>
+
+        <br>
+
+    {% endfor %}
+
+    {% if ispagefull %}
+<script type="text/javascript">
+
+</script>
+    {% else %}
+<script type="text/javascript">
+    index -= 10;
+</script>
+    {% endif %}
+
+</div>
+<div style="float: right ;width: 40%">
+
+    <div>
+        <div style="width: 100%;height: 30px;">
+            <div style="float: right;color: #cccccc"><a style="color: grey;" href="/login">切换账号</a></div>
+        </div>
+        <span> 写笔记</span><br>
+
+        <input type="text" id="title" style="width:100%;"><br><br>
+
+        <textarea name="b" id="usertext" style="width:100%;height:200px;"></textarea>
+
+        <br>
+        <button id="save_item">提交</button>
+
+        <br>
+        <br>
+
+        <button id="" onclick="lastpage()">上一页</button>
+        <button id="" onclick="nextpage()">下一页</button>
+
+        <hr>
+        <br>
+
+        <input type="text" id="search" style="width:300px;">
+        <button id="search_item">搜索</button>
+
+        <br>
+        <hr>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
