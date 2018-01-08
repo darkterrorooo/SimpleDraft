@@ -16,45 +16,48 @@
 
 
 
-###未完成特性：
+> ###未完成特性：
 
-* 密码注册登陆
-* 邀请码注册
-* 搜索，标签
-* 文本标注
-* 上传图片
-* 上传附件
-* 其他成员展示
-* 使用mysql 数据库保存数据
-* 配置文件
-* 成员管理（团队用，配置文件中配置超级管理员）
-
-
-###已完成
+	* 密码注册登陆
+	* 邀请码注册
+	* 搜索，标签
+	* 文本标注
+	* 上传图片
+	* 上传附件
+	* 其他成员展示
+	* 使用mysql 数据库保存数据
+	* 配置文件
+	* 成员管理（团队用，配置文件中配置超级管理员）
 
 
-* 基本的文件编写，修改，查看
-* 用户无密码注册
+> ###已完成
+
+
+	* 基本的文件编写，修改，查看
+	* 用户无密码注册
 
 
 
 
 #安装
+
+
 1. 安装python2.7 环境，Linux, osx 一般自带。
 
 2. 安装redis， 可使用远程redis ， 略。
 
 3. 使用easy_install 或 pip 安装python的 redis插件
 
-	easy_install redis  
+		easy_install redis  
 	
 	或
 	
-	pip install redis
+		pip install redis
 
 4. 把源文件放到服务器中，初步打算支持mac 或 linux 或 window。如果只是个人简单部署，直接执行
 
-	python Drafts & > mylog.log &
+
+		python Drafts & > mylog.log &
 	
 	
 	使用人数比较多时，可以使用gunicorn等多进程部署。
